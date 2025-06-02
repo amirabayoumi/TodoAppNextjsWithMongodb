@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import TodoListItem from "./TodoListItem";
 import type { Todo } from "@/types";
 
