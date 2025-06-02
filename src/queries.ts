@@ -61,3 +61,19 @@ export async function toggleTodo(id: string): Promise<void> {
     throw error;
   }
 }
+
+
+export async function updateTodo(id: string, task: string): Promise<void> {
+  try {
+    const db = await getDb();
+    const collection = db.collection("todolist");
+    await collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { task } }
+    );
+    revalidateTag("todos");
+  } catch (error) {
+    console.error("Error updating todo:", error);
+    throw error;
+  }
+}

@@ -1,6 +1,6 @@
 //handle add , delete and toggle actions for todos
 'use server';
-import {  deleteTodo, toggleTodo, addTodo} from "@/queries";
+import {  deleteTodo, toggleTodo, addTodo, updateTodo} from "@/queries";
 import type { Message } from "@/types";
 import { revalidateTag } from "next/cache";
 
@@ -61,4 +61,19 @@ export async function toggleTodoAction(fd: FormData): Promise<void> {
     }
 
 
+}
+
+
+export async function updateTodoAction(initialState: Message,fd: FormData): Promise<Message> {
+    const id = fd.get("id");
+    const task = fd.get("task");
+    if (typeof id === "string" && typeof task === "string") {
+        await updateTodo(id, task);
+      
+        return { type: "success", message: "Todo updated successfully!" }; 
+         revalidateTag("todos");
+        
+    } else {
+        throw new Error("Invalid or missing 'id' or 'task' in FormData");
+    }
 }
