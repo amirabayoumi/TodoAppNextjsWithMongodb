@@ -1,25 +1,15 @@
 export const dynamic = "force-dynamic";
 import TodoListItem from "./TodoListItem";
-// import type { Todo } from "@/types";
+import type { Todo } from "@/types";
 
 const TodoList = async () => {
- 
-  // const res = await fetch(`http://localhost:3000/api/todos`, {
-  //   cache: "no-store",
-  // });
-  // const todos: Todo[] = await res.json();
-  const todos =[
+  const res = await fetch(
+    "https://todo-app-nextjs-with-mongodb-ujc5.vercel.app/api/todos",
     {
-      id: "1",
-      task: "Sample Todo",
-      checked: false,
-    },
-    {
-      id: "2",
-      task: "Another Todo",
-      checked: true,
-    },
-  ]
+      next: { tags: ["todos"], revalidate: 60 }, // Revalidate every 60 seconds
+    }
+  );
+  const todos: Todo[] = await res.json();
   if (!todos || todos.length === 0) {
     return <div>No todos found</div>;
   }
