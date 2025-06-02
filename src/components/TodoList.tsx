@@ -1,16 +1,25 @@
 export const dynamic = "force-dynamic";
 import TodoListItem from "./TodoListItem";
-import type { Todo } from "@/types";
+// import type { Todo } from "@/types";
 
 const TodoList = async () => {
-  const baseUrl = process.env.VERCEL_URL || "http://localhost:3000";
-  if (!baseUrl) {
-    throw new Error("Base URL is not defined");
-  }
-  const res = await fetch(`${baseUrl}/api/todos`, {
-    next: { revalidate: 60, tags: ["todos"] },
-  });
-  const todos: Todo[] = await res.json();
+ 
+  // const res = await fetch(`http://localhost:3000/api/todos`, {
+  //   cache: "no-store",
+  // });
+  // const todos: Todo[] = await res.json();
+  const todos =[
+    {
+      id: "1",
+      task: "Sample Todo",
+      checked: false,
+    },
+    {
+      id: "2",
+      task: "Another Todo",
+      checked: true,
+    },
+  ]
   if (!todos || todos.length === 0) {
     return <div>No todos found</div>;
   }
