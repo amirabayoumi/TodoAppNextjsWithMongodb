@@ -12,7 +12,7 @@ export async function getTodos(): Promise<Todo[]> {
     return todos.map((todo) => ({
       id: todo._id.toString(),
       task: todo.task,
-      checked: Boolean(todo.checked),
+      checked: todo.checked,
     }));
   } catch (error) {
     console.error("Error fetching todolist:", error);
